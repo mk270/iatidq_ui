@@ -1,0 +1,14 @@
+language: python
+python:
+  - "2.7"
+services:
+  - rabbitmq
+install:
+  - pip install -r requirements.txt --use-mirrors
+before_script:
+  - cp config.py.tmpl config.py
+  - sudo -u postgres createdb iatidq
+  - python quickstart.py --drop-db
+  - python quickstart.py --init-db
+  - python quickstart.py --refresh --minimal
+script: "nosetests --exclude tests unittests/test_runtests.py unittests/test_summaryfn.py unittests/test_dataflows.py unittests/test_pipeline.py"

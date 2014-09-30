@@ -1,0 +1,62 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Organisations{% endblock %}
+{% block content %}
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+	{{#admin}}
+    <div class="pull-right">
+	  <a class="btn btn-success" href="{{org_new_url}}">
+		<i class="icon-plus icon-white"></i>
+		<b> New organisation</b>
+	  </a>
+	</div>
+	{{/admin}}
+
+	<h1>Organisations</h1>
+
+    <p class="lead"> 
+
+	  The following organisations are included in
+	  the <a href="http://www.publishwhatyoufund.org/index/2014-ati/">2014
+	  Aid Transparency Index</a>. Each organisation's page contains an
+	  initial assessment of the quality of the aid information they
+	  publish. Publish What You Fund will work with these
+	  organisations and independent reviewers over the course of the
+	  2014 Index data collection period to verify this data.
+
+	</p>
+    <table class="table" id="organisations">
+    <thead>
+    <th>Organisation name</th>
+    </thead>
+    <tbody>
+	{{#organisation}}
+    <tr>
+	<td>
+	  <a href="{{org_url}}">
+		{{ organisation_name }}
+	  </a>
+	</td>
+    </tr>
+	{{/organisation}}
+    </tbody>
+    </table>
+</script>
+{% endraw %}
+{% endblock %}
+
+{% block final_scripts %}
+   <script src="{{url_for('static', 
+				filename='jquery.tablesorter.min.js')}}"></script>
+    <script >
+    $(function() {
+    $("table#organisations").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+
+{% endblock %}

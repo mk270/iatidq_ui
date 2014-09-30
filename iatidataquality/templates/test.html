@@ -1,0 +1,44 @@
+{% set active_page='tests'%}{% extends "layout.html" %}
+{% block title %}{{test.id}} &raquo; Tests{% endblock %}
+{% block content %}
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+
+	<h1>Test {{test.id}}</h1>
+    <table class="table" id="tests">
+    <tbody>
+    <tr>
+	<td>ID</td><td>{{test.id}}</td>
+    </tr>
+    <tr>
+	<td>Name</td><td>{{test.name}}</td>
+    </tr>
+    <tr>
+	<td>Description</td><td>{{test.description}}</td>
+    </tr>
+    <tr>
+	<td>Level</td><td>{{test.test_level}}</td>
+    </tr>
+    <tr>
+	<td>Active</td><td>{{test.active}}</td>
+    </tr>
+    <tr>
+	<td>Group</td><td>{{test.test_group}}</td>
+    </tr>
+	<td colspan="2">
+	  <a class="btn" href="{{test.editor_url}}">
+		Edit</a>
+	</td>
+    </tbody>
+    </table>
+</script>
+{% endraw %}
+{% endblock %}
+
+{% block final_scripts %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+{% endblock %}

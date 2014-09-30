@@ -1,0 +1,56 @@
+{% set active_page='packages'%}{% extends "layout.html" %}
+{% block title %}Packages{% endblock %}
+{% block content %}
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+
+    <a href="{{manage_url}}" 
+	   class="btn pull-right">Manage packages</a>
+
+	<h1>Select a package</h1>
+
+    <form action="" method="post">
+      <table class="table" id="packages">
+		<thead>
+		  <th>Registry ID</th><th>Name</th><th></th>
+		</thead>
+		<tbody>
+		  {{#pkg}}
+		  <tr>
+			<td>
+			  <input type="hidden" name="package" 
+					 value="{{package_name}}" />
+			  <a href="{{packages_url)}}">
+				{{ package_name }}</a>
+			</td>
+			<td>{{ package_title }}</td>
+			<td>
+			  {{#man_auto}}
+			  <a href="{{edit_url}}">
+				<i class="icon-pencil"></i>
+			  </a>
+			  {{/man_auto}}
+			</td>
+		  </tr>
+		  {{/pkg}}
+		</tbody>
+      </table>
+    </form>
+</script>
+{% endraw %}
+{% endblock %}
+
+{% block final_scripts %}
+   <script src="{{url_for('static', 
+				filename='jquery.tablesorter.min.js')}}"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+{% endblock %}

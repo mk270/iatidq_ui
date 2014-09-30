@@ -1,0 +1,44 @@
+Templating
+==========
+
+We are now (August 2014) using a combination of Jinja2 and Mustache.js
+
+Mustache.js was introduced for sampling, but it also allows us to be sure
+that we're not producing complicated templates with logic that might need
+to live in the Python code, simply because it doesn't support complicated
+programming.
+
+To avoid conflicts between Jinja and Mustache, which both use "{{" and "}}",
+Mustache templates are embedded in Jinja with a {% raw %} and {% endraw %}
+around them, which makes Jinja ignore them. Mustache is executed by
+Javascript (it can be done from Python, but this is much less clean and
+much more prone to abuse and complexity), and it has to be executed before
+certain other pieces of Javascript that expect the webpage to be properly
+constructed before they run. These scripts should be placed in a 
+{% block final_script %} Jinja block at the end of the template file;
+how to do this is obvious from examples.
+
+The Mustache templates are enclosed in a <script> tag to protect them from
+the browser's HTML parser (they are slightly invalid as HTML, of necessity).
+The main body of a file thus consists in a tag like this:
+
+{% raw %}
+<script type="text/template" id="template-source">
+   [many lines of mustache template]
+</script>
+{% endraw %}
+
+above this, there is a tag like:
+
+<div id="template-target">
+</div>
+
+and there exists (in layout.html) some Javascript which detects the
+the template and the place to interpolate it ("#template-source" and
+"#template-target") and does the obvious thing. The parameters to
+the rendering are passed through as a Jinja parameter called "json_data",
+which must be generated as a string by the Python UI code.
+
+Much of what must be passed through as JSON is not actually serialisable,
+and requires conversion. This is a useful discipline. However, a lot of
+the key things have an .as_dict() method which does what's necessary.

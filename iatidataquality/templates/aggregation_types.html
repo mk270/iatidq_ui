@@ -1,0 +1,53 @@
+{% set active_page='aggregationtype'%}{% extends "layout.html" %}
+{% block title %}Aggregation Types{% endblock %}
+{% block content %}
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+
+	<h1>Aggregation Types</h1>
+    <div class="pull-right">
+    <a class="btn btn-success" 
+	   href="{{edit_url}}">
+	  <i class="icon-white icon-plus"></i> <b>New</b></a>
+    </div>
+    <table class="table" id="at">
+    <thead>
+    <th>Name</th><th>Description</th><th>Test</th><th>Test result</th>
+    </thead>
+    <tbody>
+	{{#aggregation_type}}
+    <tr>
+	<td>
+        {{ name }}
+    </td>
+    <td>{{description}}</td>
+    <td>
+	  <a href="{{tests_url}}">{{test_description}}</a>
+	</td>
+    <td>{{test_result}}</td>
+    <td>
+	  <a href="{{edit_url}}">
+		<i class="icon-pencil"></i></a>
+	</td>
+    </tr>
+	{{/aggregation_type}}
+    </tbody>
+    </table>
+
+</script>
+{% endraw %}
+{% endblock %}
+
+{% block final_scripts %}
+   <script src="{{url_for('static', 
+				          filename='jquery.tablesorter.min.js')}}"></script>
+    <script>
+    $(function() {
+    $("table#at").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+{% endblock %}

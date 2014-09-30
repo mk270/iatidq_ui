@@ -1,0 +1,56 @@
+{% set active_page='tests'%}{% extends "layout.html" %}
+{% block title %}
+  {% if test.id %}{{test.id}}{% else %}New{% endif %} &raquo; Tests
+{% endblock %}
+{% block content %}
+
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+
+    <form action="" method="post">
+    <h1>{{#id}}Edit test {{id}}{{/id}}{{^id}}New test{{/id}}</h1>
+    <table class="table">
+    <thead>
+        <th>Item</th>
+        <th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" value="{{name}}" name="name" /></td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td><input type="text" value="{{description}}" 
+				   name="description" /></td>
+    </tr>
+    <tr>
+        <td>Level</td>
+        <td><input type="text" value="{{test_level}}" 
+				   name="test_level" /></td>
+    </tr>
+    <tr>
+        <td>Active</td>
+        <td><input type="checkbox" name="active" 
+				   value="1"{{#active}} checked{{/active}} /></td>
+    </tr>
+    <tr>
+        <td>Group</td>
+        <td><input type="text" value="{{test_group}}" 
+				   name="test_group" /></td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    <input type="submit" value="Update" class="btn" />
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+</script>
+{% endraw %}
+{% endblock %}

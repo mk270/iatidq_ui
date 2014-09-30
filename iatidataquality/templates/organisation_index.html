@@ -1,0 +1,108 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}
+{{organisation.organisation_name}} &raquo; Organisations
+{% endblock %}
+{% block content %}
+
+    {% if (admin or allowed_to_view_survey or show_researcher_button) %}
+    <div class="container">
+        <div class="pull-right">
+            {% if admin %}
+            <a class="btn" 
+			   href="{{url_for('organisation_edit', 
+					 organisation_code=organisation.organisation_code)}}">
+			  <i class="icon-wrench"></i> Manage organisation</a>
+            {% endif %}
+
+            {% if allowed_to_view_survey %}
+            <a class="btn" 
+			   href="{{url_for('organisation_survey', 
+					 organisation_code=organisation.organisation_code)}}">
+			  <i class="icon-info-sign"></i> View survey</a>
+            {% endif %}
+
+            {% if show_researcher_button %}
+            <a class="btn" href="{{url_for('organisation_survey_edit', 
+                                            organisation_code=organisation.organisation_code, 
+                                            workflow_name='researcher')}}">
+			  <i class="icon-star"></i> Start survey</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="jumbotron jumbotron-index">
+    <h1>{{organisation.organisation_name}}</h1>
+    <p class="lead">An initial assessment of your organisation's aid
+    transparency is available below.</p>
+    </div>
+    
+    <div class="row">
+        <div class="span6 commitment">
+            <h1>Commitment</h1>
+            <p class="foundschedule muted">
+			  <i class="icon icon-refresh"></i>
+			  Checking for implementation schedule...</p>
+            <p class="approach"></p>
+            <p class="elements"></p>
+            <p class="review"></p>
+        </div>
+        <div class="span6 publication">
+            <h1>Publication</h1>
+			{% include "publication_box.html" %}
+        </div>
+    </div>    
+    <hr />
+    <div class="row">
+        <div class="span6">
+        <h3>Timeline</h3>
+        <table class="table">
+        <tbody>
+        <tr>
+            <td><b>April 1</b></td>
+			<td>Data collection begins</td>
+			<td></td>
+        </tr>
+        <tr class="success">
+            <td><b>April - May</b></td>
+			<td>Initial assessments shared with organisations for review</td>
+			<td><i class="icon-arrow-left"></i></td>
+        </tr>
+        <tr>
+            <td><b>May - June</b></td>
+			<td>Surveys shared with independent reviewers</td>
+			<td></td>
+        </tr>
+        <tr>
+            <td><b>June 30</b></td>
+			<td>Data collection ends; final round of IATI data collected</td>
+			<td></td>
+        </tr>
+        <tr>
+            <td><b>July</b></td>
+			<td>Final assessment shared with organisations</td>
+			<td></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+
+        <div class="span6">
+            <h3>Index scoring approach</h3>
+            <p>Information published in more accessible formats is
+            scored more highly. IATI is the only international
+            standard for publishing comprehensive, comparable, timely
+            and accessible data, which are critical components of aid
+            transparency.</p>
+        </div>
+    </div>
+
+	<script type="text/javascript">
+	  // sorry about global
+	  var organisation_code = "{{organisation.organisation_code}}";
+	</script>
+
+    <script src="{{url_for('static', filename='js/organisationIndex.js')}}">
+	</script>
+
+{% endblock %}

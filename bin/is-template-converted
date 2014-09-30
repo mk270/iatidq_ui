@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -eu
+
+filename=$1
+
+if ! grep -q 'template-target' $filename; then
+   echo No template-target
+   exit 1
+fi
+
+if ! grep -q 'template-source' $filename; then
+	echo No template-source
+	exit 1
+fi
+
+if grep -q '{% *for' $filename; then
+   echo "Still has Jinja2 {% for %} directives"
+   exit 1
+fi
